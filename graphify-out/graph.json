@@ -1,0 +1,883 @@
+{
+  "directed": false,
+  "multigraph": false,
+  "graph": {},
+  "nodes": [
+    {
+      "label": "main.py",
+      "file_type": "code",
+      "source_file": "backend\\app\\main.py",
+      "source_location": "L1",
+      "id": "backend_app_main_py",
+      "community": 6,
+      "norm_label": "main.py"
+    },
+    {
+      "label": "root()",
+      "file_type": "code",
+      "source_file": "backend\\app\\main.py",
+      "source_location": "L23",
+      "id": "app_main_root",
+      "community": 6,
+      "norm_label": "root()"
+    },
+    {
+      "label": "data.py",
+      "file_type": "code",
+      "source_file": "backend\\app\\routes\\data.py",
+      "source_location": "L1",
+      "id": "backend_app_routes_data_py",
+      "community": 3,
+      "norm_label": "data.py"
+    },
+    {
+      "label": "generate_data_endpoint()",
+      "file_type": "code",
+      "source_file": "backend\\app\\routes\\data.py",
+      "source_location": "L7",
+      "id": "routes_data_generate_data_endpoint",
+      "community": 3,
+      "norm_label": "generate_data_endpoint()"
+    },
+    {
+      "label": "explain.py",
+      "file_type": "code",
+      "source_file": "backend\\app\\routes\\explain.py",
+      "source_location": "L1",
+      "id": "backend_app_routes_explain_py",
+      "community": 4,
+      "norm_label": "explain.py"
+    },
+    {
+      "label": "explain_endpoint()",
+      "file_type": "code",
+      "source_file": "backend\\app\\routes\\explain.py",
+      "source_location": "L7",
+      "id": "routes_explain_explain_endpoint",
+      "community": 4,
+      "norm_label": "explain_endpoint()"
+    },
+    {
+      "label": "forecast.py",
+      "file_type": "code",
+      "source_file": "backend\\app\\routes\\forecast.py",
+      "source_location": "L1",
+      "id": "backend_app_routes_forecast_py",
+      "community": 2,
+      "norm_label": "forecast.py"
+    },
+    {
+      "label": "forecast_endpoint()",
+      "file_type": "code",
+      "source_file": "backend\\app\\routes\\forecast.py",
+      "source_location": "L7",
+      "id": "routes_forecast_forecast_endpoint",
+      "community": 2,
+      "norm_label": "forecast_endpoint()"
+    },
+    {
+      "label": "risk.py",
+      "file_type": "code",
+      "source_file": "backend\\app\\routes\\risk.py",
+      "source_location": "L1",
+      "id": "backend_app_routes_risk_py",
+      "community": 0,
+      "norm_label": "risk.py"
+    },
+    {
+      "label": "risk_endpoint()",
+      "file_type": "code",
+      "source_file": "backend\\app\\routes\\risk.py",
+      "source_location": "L7",
+      "id": "routes_risk_risk_endpoint",
+      "community": 0,
+      "norm_label": "risk_endpoint()"
+    },
+    {
+      "label": "schedule.py",
+      "file_type": "code",
+      "source_file": "backend\\app\\routes\\schedule.py",
+      "source_location": "L1",
+      "id": "backend_app_routes_schedule_py",
+      "community": 0,
+      "norm_label": "schedule.py"
+    },
+    {
+      "label": "schedule_endpoint()",
+      "file_type": "code",
+      "source_file": "backend\\app\\routes\\schedule.py",
+      "source_location": "L7",
+      "id": "routes_schedule_schedule_endpoint",
+      "community": 0,
+      "norm_label": "schedule_endpoint()"
+    },
+    {
+      "label": "data_generator.py",
+      "file_type": "code",
+      "source_file": "backend\\app\\services\\data_generator.py",
+      "source_location": "L1",
+      "id": "backend_app_services_data_generator_py",
+      "community": 3,
+      "norm_label": "data_generator.py"
+    },
+    {
+      "label": "generate_data()",
+      "file_type": "code",
+      "source_file": "backend\\app\\services\\data_generator.py",
+      "source_location": "L6",
+      "id": "services_data_generator_generate_data",
+      "community": 3,
+      "norm_label": "generate_data()"
+    },
+    {
+      "label": "explainer.py",
+      "file_type": "code",
+      "source_file": "backend\\app\\services\\explainer.py",
+      "source_location": "L1",
+      "id": "backend_app_services_explainer_py",
+      "community": 4,
+      "norm_label": "explainer.py"
+    },
+    {
+      "label": "explain_forecast()",
+      "file_type": "code",
+      "source_file": "backend\\app\\services\\explainer.py",
+      "source_location": "L6",
+      "id": "services_explainer_explain_forecast",
+      "community": 4,
+      "norm_label": "explain_forecast()"
+    },
+    {
+      "label": "forecaster.py",
+      "file_type": "code",
+      "source_file": "backend\\app\\services\\forecaster.py",
+      "source_location": "L1",
+      "id": "backend_app_services_forecaster_py",
+      "community": 2,
+      "norm_label": "forecaster.py"
+    },
+    {
+      "label": "train_model()",
+      "file_type": "code",
+      "source_file": "backend\\app\\services\\forecaster.py",
+      "source_location": "L10",
+      "id": "services_forecaster_train_model",
+      "community": 2,
+      "norm_label": "train_model()"
+    },
+    {
+      "label": "get_forecast()",
+      "file_type": "code",
+      "source_file": "backend\\app\\services\\forecaster.py",
+      "source_location": "L35",
+      "id": "services_forecaster_get_forecast",
+      "community": 2,
+      "norm_label": "get_forecast()"
+    },
+    {
+      "label": "risk_detector.py",
+      "file_type": "code",
+      "source_file": "backend\\app\\services\\risk_detector.py",
+      "source_location": "L1",
+      "id": "backend_app_services_risk_detector_py",
+      "community": 0,
+      "norm_label": "risk_detector.py"
+    },
+    {
+      "label": "detect_risk()",
+      "file_type": "code",
+      "source_file": "backend\\app\\services\\risk_detector.py",
+      "source_location": "L4",
+      "id": "services_risk_detector_detect_risk",
+      "community": 0,
+      "norm_label": "detect_risk()"
+    },
+    {
+      "label": "scheduler.py",
+      "file_type": "code",
+      "source_file": "backend\\app\\services\\scheduler.py",
+      "source_location": "L1",
+      "id": "backend_app_services_scheduler_py",
+      "community": 0,
+      "norm_label": "scheduler.py"
+    },
+    {
+      "label": "optimize_schedule()",
+      "file_type": "code",
+      "source_file": "backend\\app\\services\\scheduler.py",
+      "source_location": "L5",
+      "id": "services_scheduler_optimize_schedule",
+      "community": 0,
+      "norm_label": "optimize_schedule()"
+    },
+    {
+      "label": "config.py",
+      "file_type": "code",
+      "source_file": "backend\\app\\utils\\config.py",
+      "source_location": "L1",
+      "id": "backend_app_utils_config_py",
+      "community": 7,
+      "norm_label": "config.py"
+    },
+    {
+      "label": "Config",
+      "file_type": "code",
+      "source_file": "backend\\app\\utils\\config.py",
+      "source_location": "L6",
+      "id": "utils_config_config",
+      "community": 7,
+      "norm_label": "config"
+    },
+    {
+      "label": "postcss.config.js",
+      "file_type": "code",
+      "source_file": "frontend\\postcss.config.js",
+      "source_location": "L1",
+      "id": "frontend_postcss_config_js",
+      "community": 14,
+      "norm_label": "postcss.config.js"
+    },
+    {
+      "label": "tailwind.config.js",
+      "file_type": "code",
+      "source_file": "frontend\\tailwind.config.js",
+      "source_location": "L1",
+      "id": "frontend_tailwind_config_js",
+      "community": 15,
+      "norm_label": "tailwind.config.js"
+    },
+    {
+      "label": "vite.config.js",
+      "file_type": "code",
+      "source_file": "frontend\\vite.config.js",
+      "source_location": "L1",
+      "id": "frontend_vite_config_js",
+      "community": 16,
+      "norm_label": "vite.config.js"
+    },
+    {
+      "label": "App.jsx",
+      "file_type": "code",
+      "source_file": "frontend\\src\\App.jsx",
+      "source_location": "L1",
+      "id": "frontend_src_app_jsx",
+      "community": 8,
+      "norm_label": "app.jsx"
+    },
+    {
+      "label": "App()",
+      "file_type": "code",
+      "source_file": "frontend\\src\\App.jsx",
+      "source_location": "L9",
+      "id": "src_app_app",
+      "community": 8,
+      "norm_label": "app()"
+    },
+    {
+      "label": "main.jsx",
+      "file_type": "code",
+      "source_file": "frontend\\src\\main.jsx",
+      "source_location": "L1",
+      "id": "frontend_src_main_jsx",
+      "community": 17,
+      "norm_label": "main.jsx"
+    },
+    {
+      "label": "ChartCard.jsx",
+      "file_type": "code",
+      "source_file": "frontend\\src\\components\\ChartCard.jsx",
+      "source_location": "L1",
+      "id": "frontend_src_components_chartcard_jsx",
+      "community": 9,
+      "norm_label": "chartcard.jsx"
+    },
+    {
+      "label": "ChartCard()",
+      "file_type": "code",
+      "source_file": "frontend\\src\\components\\ChartCard.jsx",
+      "source_location": "L3",
+      "id": "components_chartcard_chartcard",
+      "community": 9,
+      "norm_label": "chartcard()"
+    },
+    {
+      "label": "MetricCard.jsx",
+      "file_type": "code",
+      "source_file": "frontend\\src\\components\\MetricCard.jsx",
+      "source_location": "L1",
+      "id": "frontend_src_components_metriccard_jsx",
+      "community": 10,
+      "norm_label": "metriccard.jsx"
+    },
+    {
+      "label": "MetricCard()",
+      "file_type": "code",
+      "source_file": "frontend\\src\\components\\MetricCard.jsx",
+      "source_location": "L3",
+      "id": "components_metriccard_metriccard",
+      "community": 10,
+      "norm_label": "metriccard()"
+    },
+    {
+      "label": "Sidebar.jsx",
+      "file_type": "code",
+      "source_file": "frontend\\src\\components\\Sidebar.jsx",
+      "source_location": "L1",
+      "id": "frontend_src_components_sidebar_jsx",
+      "community": 11,
+      "norm_label": "sidebar.jsx"
+    },
+    {
+      "label": "Sidebar()",
+      "file_type": "code",
+      "source_file": "frontend\\src\\components\\Sidebar.jsx",
+      "source_location": "L4",
+      "id": "components_sidebar_sidebar",
+      "community": 11,
+      "norm_label": "sidebar()"
+    },
+    {
+      "label": "TopBar.jsx",
+      "file_type": "code",
+      "source_file": "frontend\\src\\components\\TopBar.jsx",
+      "source_location": "L1",
+      "id": "frontend_src_components_topbar_jsx",
+      "community": 12,
+      "norm_label": "topbar.jsx"
+    },
+    {
+      "label": "TopBar()",
+      "file_type": "code",
+      "source_file": "frontend\\src\\components\\TopBar.jsx",
+      "source_location": "L4",
+      "id": "components_topbar_topbar",
+      "community": 12,
+      "norm_label": "topbar()"
+    },
+    {
+      "label": "Dashboard.jsx",
+      "file_type": "code",
+      "source_file": "frontend\\src\\pages\\Dashboard.jsx",
+      "source_location": "L1",
+      "id": "frontend_src_pages_dashboard_jsx",
+      "community": 1,
+      "norm_label": "dashboard.jsx"
+    },
+    {
+      "label": "Dashboard()",
+      "file_type": "code",
+      "source_file": "frontend\\src\\pages\\Dashboard.jsx",
+      "source_location": "L7",
+      "id": "pages_dashboard_dashboard",
+      "community": 1,
+      "norm_label": "dashboard()"
+    },
+    {
+      "label": "Planning.jsx",
+      "file_type": "code",
+      "source_file": "frontend\\src\\pages\\Planning.jsx",
+      "source_location": "L1",
+      "id": "frontend_src_pages_planning_jsx",
+      "community": 13,
+      "norm_label": "planning.jsx"
+    },
+    {
+      "label": "Planning()",
+      "file_type": "code",
+      "source_file": "frontend\\src\\pages\\Planning.jsx",
+      "source_location": "L33",
+      "id": "pages_planning_planning",
+      "community": 13,
+      "norm_label": "planning()"
+    },
+    {
+      "label": "Recommendation.jsx",
+      "file_type": "code",
+      "source_file": "frontend\\src\\pages\\Recommendation.jsx",
+      "source_location": "L1",
+      "id": "frontend_src_pages_recommendation_jsx",
+      "community": 5,
+      "norm_label": "recommendation.jsx"
+    },
+    {
+      "label": "Recommendation()",
+      "file_type": "code",
+      "source_file": "frontend\\src\\pages\\Recommendation.jsx",
+      "source_location": "L7",
+      "id": "pages_recommendation_recommendation",
+      "community": 5,
+      "norm_label": "recommendation()"
+    },
+    {
+      "label": "api.js",
+      "file_type": "code",
+      "source_file": "frontend\\src\\services\\api.js",
+      "source_location": "L1",
+      "id": "frontend_src_services_api_js",
+      "community": 1,
+      "norm_label": "api.js"
+    },
+    {
+      "label": "generateData()",
+      "file_type": "code",
+      "source_file": "frontend\\src\\services\\api.js",
+      "source_location": "L5",
+      "id": "services_api_generatedata",
+      "community": 1,
+      "norm_label": "generatedata()"
+    },
+    {
+      "label": "getForecast()",
+      "file_type": "code",
+      "source_file": "frontend\\src\\services\\api.js",
+      "source_location": "L6",
+      "id": "services_api_getforecast",
+      "community": 1,
+      "norm_label": "getforecast()"
+    },
+    {
+      "label": "getRisk()",
+      "file_type": "code",
+      "source_file": "frontend\\src\\services\\api.js",
+      "source_location": "L7",
+      "id": "services_api_getrisk",
+      "community": 1,
+      "norm_label": "getrisk()"
+    },
+    {
+      "label": "getSchedule()",
+      "file_type": "code",
+      "source_file": "frontend\\src\\services\\api.js",
+      "source_location": "L8",
+      "id": "services_api_getschedule",
+      "community": 5,
+      "norm_label": "getschedule()"
+    },
+    {
+      "label": "getExplain()",
+      "file_type": "code",
+      "source_file": "frontend\\src\\services\\api.js",
+      "source_location": "L9",
+      "id": "services_api_getexplain",
+      "community": 1,
+      "norm_label": "getexplain()"
+    }
+  ],
+  "links": [
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend\\app\\main.py",
+      "source_location": "L23",
+      "weight": 1.0,
+      "source": "backend_app_main_py",
+      "target": "app_main_root",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend\\app\\routes\\data.py",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "backend_app_routes_data_py",
+      "target": "routes_data_generate_data_endpoint",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "backend\\app\\routes\\data.py",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "routes_data_generate_data_endpoint",
+      "target": "services_data_generator_generate_data"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend\\app\\routes\\explain.py",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "backend_app_routes_explain_py",
+      "target": "routes_explain_explain_endpoint",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "backend\\app\\routes\\explain.py",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "routes_explain_explain_endpoint",
+      "target": "services_explainer_explain_forecast"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend\\app\\routes\\forecast.py",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "backend_app_routes_forecast_py",
+      "target": "routes_forecast_forecast_endpoint",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "backend\\app\\routes\\forecast.py",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "routes_forecast_forecast_endpoint",
+      "target": "services_forecaster_get_forecast"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend\\app\\routes\\risk.py",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "backend_app_routes_risk_py",
+      "target": "routes_risk_risk_endpoint",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "backend\\app\\routes\\risk.py",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "routes_risk_risk_endpoint",
+      "target": "services_risk_detector_detect_risk"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend\\app\\routes\\schedule.py",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "backend_app_routes_schedule_py",
+      "target": "routes_schedule_schedule_endpoint",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "backend\\app\\routes\\schedule.py",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "routes_schedule_schedule_endpoint",
+      "target": "services_scheduler_optimize_schedule"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend\\app\\services\\data_generator.py",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "backend_app_services_data_generator_py",
+      "target": "services_data_generator_generate_data",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend\\app\\services\\explainer.py",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "backend_app_services_explainer_py",
+      "target": "services_explainer_explain_forecast",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend\\app\\services\\forecaster.py",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "backend_app_services_forecaster_py",
+      "target": "services_forecaster_train_model",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend\\app\\services\\forecaster.py",
+      "source_location": "L35",
+      "weight": 1.0,
+      "source": "backend_app_services_forecaster_py",
+      "target": "services_forecaster_get_forecast",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend\\app\\services\\forecaster.py",
+      "source_location": "L38",
+      "weight": 1.0,
+      "source": "services_forecaster_get_forecast",
+      "target": "services_forecaster_train_model",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "backend\\app\\services\\risk_detector.py",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "services_risk_detector_detect_risk",
+      "target": "services_forecaster_get_forecast"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "backend\\app\\services\\scheduler.py",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "services_scheduler_optimize_schedule",
+      "target": "services_forecaster_get_forecast"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend\\app\\services\\risk_detector.py",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "backend_app_services_risk_detector_py",
+      "target": "services_risk_detector_detect_risk",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "backend\\app\\services\\scheduler.py",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "services_scheduler_optimize_schedule",
+      "target": "services_risk_detector_detect_risk"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend\\app\\services\\scheduler.py",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "backend_app_services_scheduler_py",
+      "target": "services_scheduler_optimize_schedule",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend\\app\\utils\\config.py",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "backend_app_utils_config_py",
+      "target": "utils_config_config",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend\\src\\App.jsx",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "frontend_src_app_jsx",
+      "target": "src_app_app",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend\\src\\components\\ChartCard.jsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "frontend_src_components_chartcard_jsx",
+      "target": "components_chartcard_chartcard",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend\\src\\components\\MetricCard.jsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "frontend_src_components_metriccard_jsx",
+      "target": "components_metriccard_metriccard",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend\\src\\components\\Sidebar.jsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "frontend_src_components_sidebar_jsx",
+      "target": "components_sidebar_sidebar",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend\\src\\components\\TopBar.jsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "frontend_src_components_topbar_jsx",
+      "target": "components_topbar_topbar",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend\\src\\pages\\Dashboard.jsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "frontend_src_pages_dashboard_jsx",
+      "target": "services_api_generatedata",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend\\src\\pages\\Dashboard.jsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "frontend_src_pages_dashboard_jsx",
+      "target": "services_api_getforecast",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend\\src\\pages\\Dashboard.jsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "frontend_src_pages_dashboard_jsx",
+      "target": "services_api_getrisk",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend\\src\\pages\\Dashboard.jsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "frontend_src_pages_dashboard_jsx",
+      "target": "services_api_getexplain",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend\\src\\pages\\Dashboard.jsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "frontend_src_pages_dashboard_jsx",
+      "target": "pages_dashboard_dashboard",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend\\src\\pages\\Planning.jsx",
+      "source_location": "L33",
+      "weight": 1.0,
+      "source": "frontend_src_pages_planning_jsx",
+      "target": "pages_planning_planning",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend\\src\\pages\\Recommendation.jsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "frontend_src_pages_recommendation_jsx",
+      "target": "services_api_getschedule",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend\\src\\pages\\Recommendation.jsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "frontend_src_pages_recommendation_jsx",
+      "target": "pages_recommendation_recommendation",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend\\src\\services\\api.js",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "frontend_src_services_api_js",
+      "target": "services_api_generatedata",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend\\src\\services\\api.js",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "frontend_src_services_api_js",
+      "target": "services_api_getforecast",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend\\src\\services\\api.js",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "frontend_src_services_api_js",
+      "target": "services_api_getrisk",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend\\src\\services\\api.js",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "frontend_src_services_api_js",
+      "target": "services_api_getschedule",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend\\src\\services\\api.js",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "frontend_src_services_api_js",
+      "target": "services_api_getexplain",
+      "confidence_score": 1.0
+    }
+  ],
+  "hyperedges": []
+}

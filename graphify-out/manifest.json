@@ -1,0 +1,166 @@
+{
+  "C:\\Users\\HP\\Downloads\\COMPUTER\\AI4bharat\\backend\\app\\main.py": {
+    "mtime": 1777840722.4692163,
+    "hash": "473a3b9fcee24683f1d1b0c402c67ac2"
+  },
+  "C:\\Users\\HP\\Downloads\\COMPUTER\\AI4bharat\\backend\\app\\routes\\data.py": {
+    "mtime": 1777840723.6957672,
+    "hash": "66af1ba944c4e8c2e98881f032651680"
+  },
+  "C:\\Users\\HP\\Downloads\\COMPUTER\\AI4bharat\\backend\\app\\routes\\explain.py": {
+    "mtime": 1777840726.094977,
+    "hash": "e87fbae324244126bedb92d2325b16d3"
+  },
+  "C:\\Users\\HP\\Downloads\\COMPUTER\\AI4bharat\\backend\\app\\routes\\forecast.py": {
+    "mtime": 1777840724.2304854,
+    "hash": "4bbf9919b423e980214d74c32a4e895d"
+  },
+  "C:\\Users\\HP\\Downloads\\COMPUTER\\AI4bharat\\backend\\app\\routes\\risk.py": {
+    "mtime": 1777840725.0550046,
+    "hash": "4ba7eef3c51086a4177d16d6debffebf"
+  },
+  "C:\\Users\\HP\\Downloads\\COMPUTER\\AI4bharat\\backend\\app\\routes\\schedule.py": {
+    "mtime": 1777840725.6361403,
+    "hash": "5dfb244aab2ee030ba77d6931bb188d6"
+  },
+  "C:\\Users\\HP\\Downloads\\COMPUTER\\AI4bharat\\backend\\app\\services\\data_generator.py": {
+    "mtime": 1777843651.5424113,
+    "hash": "a2d6efad4c0b7955cd60771bca1571ae"
+  },
+  "C:\\Users\\HP\\Downloads\\COMPUTER\\AI4bharat\\backend\\app\\services\\explainer.py": {
+    "mtime": 1777842241.828722,
+    "hash": "c550a6a749bc898663b221669333b128"
+  },
+  "C:\\Users\\HP\\Downloads\\COMPUTER\\AI4bharat\\backend\\app\\services\\forecaster.py": {
+    "mtime": 1777843717.1674092,
+    "hash": "4d2d68817d7b54482de1c0e10b05304b"
+  },
+  "C:\\Users\\HP\\Downloads\\COMPUTER\\AI4bharat\\backend\\app\\services\\risk_detector.py": {
+    "mtime": 1777840728.202451,
+    "hash": "da7e0d8cfbfb4b7fb05d4cb3c676f144"
+  },
+  "C:\\Users\\HP\\Downloads\\COMPUTER\\AI4bharat\\backend\\app\\services\\scheduler.py": {
+    "mtime": 1777840728.8077805,
+    "hash": "1edb8f7716a0a24c9a3927c6bc00c89f"
+  },
+  "C:\\Users\\HP\\Downloads\\COMPUTER\\AI4bharat\\backend\\app\\utils\\config.py": {
+    "mtime": 1777840721.8456547,
+    "hash": "3157532fc2d79ed84781d3fe74edc998"
+  },
+  "C:\\Users\\HP\\Downloads\\COMPUTER\\AI4bharat\\frontend\\postcss.config.js": {
+    "mtime": 1777840814.7226372,
+    "hash": "ef3ba2a81ba19f8ea5ddf625521e96f0"
+  },
+  "C:\\Users\\HP\\Downloads\\COMPUTER\\AI4bharat\\frontend\\tailwind.config.js": {
+    "mtime": 1778015176.106834,
+    "hash": "23b2a1f0a1ecaccaa7b3543b606c514c"
+  },
+  "C:\\Users\\HP\\Downloads\\COMPUTER\\AI4bharat\\frontend\\vite.config.js": {
+    "mtime": 1777840813.7261424,
+    "hash": "6ef5ee739910aea2c73558f2e91bcd82"
+  },
+  "C:\\Users\\HP\\Downloads\\COMPUTER\\AI4bharat\\frontend\\src\\App.jsx": {
+    "mtime": 1778015229.010445,
+    "hash": "c733281ec68c73530c1a9de08ef3225f"
+  },
+  "C:\\Users\\HP\\Downloads\\COMPUTER\\AI4bharat\\frontend\\src\\main.jsx": {
+    "mtime": 1777840815.8363059,
+    "hash": "54a301507dcdfccf4e5565754374b5dc"
+  },
+  "C:\\Users\\HP\\Downloads\\COMPUTER\\AI4bharat\\frontend\\src\\components\\ChartCard.jsx": {
+    "mtime": 1778015251.9495864,
+    "hash": "f7c164d99cd55913a13d092df743ae15"
+  },
+  "C:\\Users\\HP\\Downloads\\COMPUTER\\AI4bharat\\frontend\\src\\components\\MetricCard.jsx": {
+    "mtime": 1778015241.9748642,
+    "hash": "020915b0952f4c52a01ef54e35d0fe21"
+  },
+  "C:\\Users\\HP\\Downloads\\COMPUTER\\AI4bharat\\frontend\\src\\components\\Sidebar.jsx": {
+    "mtime": 1778015201.6773934,
+    "hash": "7b75f9fdfebaecea21b82f3d3a24be13"
+  },
+  "C:\\Users\\HP\\Downloads\\COMPUTER\\AI4bharat\\frontend\\src\\components\\TopBar.jsx": {
+    "mtime": 1778015220.9702647,
+    "hash": "ffdf9e38cfa9405e3254001629cf1756"
+  },
+  "C:\\Users\\HP\\Downloads\\COMPUTER\\AI4bharat\\frontend\\src\\pages\\Dashboard.jsx": {
+    "mtime": 1778015302.3268979,
+    "hash": "44388bf940d40fc5cab3891f93f28dff"
+  },
+  "C:\\Users\\HP\\Downloads\\COMPUTER\\AI4bharat\\frontend\\src\\pages\\Planning.jsx": {
+    "mtime": 1778015363.0987444,
+    "hash": "781e8e6044ac604901b5d2061aa52d71"
+  },
+  "C:\\Users\\HP\\Downloads\\COMPUTER\\AI4bharat\\frontend\\src\\pages\\Recommendation.jsx": {
+    "mtime": 1778015331.0932102,
+    "hash": "8fbe1ea0964ab361faa5bf83b2191e89"
+  },
+  "C:\\Users\\HP\\Downloads\\COMPUTER\\AI4bharat\\frontend\\src\\services\\api.js": {
+    "mtime": 1777840817.0719278,
+    "hash": "57537a8cc22d50d4229f90f2b4292951"
+  },
+  "C:\\Users\\HP\\Downloads\\COMPUTER\\AI4bharat\\README.md": {
+    "mtime": 1777843874.0171113,
+    "hash": "83a46fdae959d73304422394008e34a3"
+  },
+  "C:\\Users\\HP\\Downloads\\COMPUTER\\AI4bharat\\backend\\requirements.txt": {
+    "mtime": 1777842413.686659,
+    "hash": "9078f21db720d92c78f3b5d09503070e"
+  },
+  "C:\\Users\\HP\\Downloads\\COMPUTER\\AI4bharat\\frontend\\index.html": {
+    "mtime": 1777840815.2222686,
+    "hash": "817bb77e8699e5267b840b79da6ac575"
+  },
+  "C:\\Users\\HP\\Downloads\\COMPUTER\\AI4bharat\\md-files\\API_TESTING_GUIDE.md": {
+    "mtime": 1777841013.6217265,
+    "hash": "cfc833a446142db3b3fe3dd57395a407"
+  },
+  "C:\\Users\\HP\\Downloads\\COMPUTER\\AI4bharat\\md-files\\ChargeWise_AI_Engineering_Spec.md": {
+    "mtime": 1777839779.57067,
+    "hash": "54c70aef2b98bb4ed999da362675084d"
+  },
+  "C:\\Users\\HP\\Downloads\\COMPUTER\\AI4bharat\\md-files\\ENV_VARIABLES.md": {
+    "mtime": 1777840864.7220058,
+    "hash": "ccf84ad369fc970add9703e0a12680d8"
+  },
+  "C:\\Users\\HP\\Downloads\\COMPUTER\\AI4bharat\\md-files\\FILE_TREE.md": {
+    "mtime": 1777841145.74172,
+    "hash": "01ff4521dc791d1d605647afcaf53b78"
+  },
+  "C:\\Users\\HP\\Downloads\\COMPUTER\\AI4bharat\\md-files\\INDEX.md": {
+    "mtime": 1777841052.5412426,
+    "hash": "c64edea5108468accef3cc574880ea4a"
+  },
+  "C:\\Users\\HP\\Downloads\\COMPUTER\\AI4bharat\\md-files\\INSTALLATION_GUIDE.md": {
+    "mtime": 1777840971.1660905,
+    "hash": "0080166074405e6215c3512d87ecee45"
+  },
+  "C:\\Users\\HP\\Downloads\\COMPUTER\\AI4bharat\\md-files\\INSTALL_FIX.md": {
+    "mtime": 1777842258.1054876,
+    "hash": "966ccebdd48091a0f10ab343f3b9ccc1"
+  },
+  "C:\\Users\\HP\\Downloads\\COMPUTER\\AI4bharat\\md-files\\PROJECT_COMPLETE.md": {
+    "mtime": 1777841102.501071,
+    "hash": "6d5852e433178178578ec5bc41d22448"
+  },
+  "C:\\Users\\HP\\Downloads\\COMPUTER\\AI4bharat\\md-files\\PROJECT_ROADMAP.md": {
+    "mtime": 1777844740.7754889,
+    "hash": "5594a446c33842d832c9c7039a16e95d"
+  },
+  "C:\\Users\\HP\\Downloads\\COMPUTER\\AI4bharat\\md-files\\PROJECT_SUMMARY.md": {
+    "mtime": 1777840906.3082583,
+    "hash": "9b29974f8e632b26e10e1581a143d3e1"
+  },
+  "C:\\Users\\HP\\Downloads\\COMPUTER\\AI4bharat\\md-files\\QUICKSTART.md": {
+    "mtime": 1777840838.8795724,
+    "hash": "b9817bea59e5030cc9e143fc86b17d38"
+  },
+  "C:\\Users\\HP\\Downloads\\COMPUTER\\AI4bharat\\md-files\\START_HERE.md": {
+    "mtime": 1777841179.612659,
+    "hash": "6246f3a42a41233e742f7c0b53e5a414"
+  },
+  "C:\\Users\\HP\\Downloads\\COMPUTER\\AI4bharat\\md-files\\UI_REDESIGN.md": {
+    "mtime": 1777844756.847455,
+    "hash": "28fa5cfa7d28ebb3e5b76fe04b08b40a"
+  }
+}

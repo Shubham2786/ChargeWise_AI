@@ -75,4 +75,7 @@ Thumbs.db
 ~*
 
 # Documentation (optional - uncomment if you want to ignore)
-# md-files/
+#md-files/*
+
+# Generated analysis output
+graphify-out/

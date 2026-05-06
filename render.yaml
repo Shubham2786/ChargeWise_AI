@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: chargewise-backend
+    runtime: python
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: DATABASE_URL
+        sync: false # paste your Supabase URL in Render dashboard
+      - key: GROQ_API_KEY
+        sync: false
+      - key: USE_AI_DEMO_DATA
+        value: "true"
+      - key: SCENARIO_MODE
+        value: NORMAL
+      - key: DEBUG
+        value: "false"
+      - key: CORS_ORIGINS
+        sync: false # set to your frontend URL e.g. https://your-app.vercel.app

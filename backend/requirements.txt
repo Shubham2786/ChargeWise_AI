@@ -1,7 +1,31 @@
+# Web Framework
 fastapi==0.115.5
 uvicorn==0.32.1
+
+# Database
+sqlalchemy==2.0.23
+alembic==1.13.1
+psycopg2-binary==2.9.9
+
+# Data Processing
 pandas==2.2.3
+numpy==2.2.3
+
+# HTTP Client
+requests==2.31.0
+
+# Configuration
+python-dotenv==1.0.1
+
+# Testing
+pytest==7.4.3
+pytest-asyncio==0.21.1
+
+# Legacy (Grid Optimizer)
 xgboost==2.1.3
 scikit-learn==1.6.1
-numpy==2.2.3
-python-dotenv==1.0.1
+shap>=0.44.1
+
+# AI Demo Generation
+groq>=0.13.0
+cachetools==5.5.0

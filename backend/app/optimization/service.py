@@ -77,8 +77,9 @@ class OptimizationService:
             else:
                 base_load = p["p50"]
                 
+            # Start from next hour so schedule is forward-looking
             forecast_load.append({
-                "timestamp": now + datetime.timedelta(hours=i),
+                "timestamp": now + datetime.timedelta(hours=i + 1),
                 "predicted_kwh": base_load
             })
             
@@ -86,7 +87,7 @@ class OptimizationService:
             # Fallback if forecast is empty
             for i in range(horizon_hours):
                 forecast_load.append({
-                    "timestamp": now + datetime.timedelta(hours=i),
+                    "timestamp": now + datetime.timedelta(hours=i + 1),
                     "predicted_kwh": 0.0
                 })
                 

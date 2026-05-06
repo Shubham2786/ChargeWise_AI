@@ -1,39 +1,33 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { getPlanningCandidates } from '../services/api'
+import { useDemoData } from '../mock/useDemoData'
+import { generatePlanningCandidates, formatCurrency } from '../mock/dataGenerator'
 
 function Planning() {
-  const [locations, setLocations] = useState([])
-  const [loading, setLoading] = useState(true)
-  
-  useEffect(() => {
-    const fetchLocations = async () => {
-      try {
-        const res = await getPlanningCandidates()
-        // Map the backend candidates to the UI schema
-        const mapped = res.data.candidates.map((c, i) => {
-          // Determine priority based on score
-          let priority = 'low'
-          if (c.score >= 0.7) priority = 'high'
-          else if (c.score >= 0.4) priority = 'medium'
-          
-          return {
-            name: `Candidate Zone ${i+1}`,
-            score: Math.round(c.score * 100),
-            status: c.reason,
-            capacity: 'N/A', // New zone, so no current usage
-            location: c.location,
-            priority: priority
-          }
-        })
-        setLocations(mapped)
-      } catch (err) {
-        console.error("Failed to fetch candidates", err)
-      } finally {
-        setLoading(false)
-      }
+  const { data: rawCandidates, loading, source } = useDemoData(
+    async () => {
+      const res = await getPlanningCandidates()
+      return { data: res.data?.candidates ?? res.data ?? [] }
+    },
+    (tick) => generatePlanningCandidates(tick)
+  )
+
+  const candidatesArr = Array.isArray(rawCandidates) ? rawCandidates : []
+
+  const locations = candidatesArr.map((c, i) => {
+    let priority = 'low'
+    if ((c.score ?? 0) >= 0.75) priority = 'high'
+    else if ((c.score ?? 0) >= 0.5) priority = 'medium'
+    return {
+      name:     c.zone_name ?? `Candidate Zone ${i + 1}`,
+      score:    c.score_pct ?? Math.round((c.score ?? 0) * 100),
+      status:   c.reason,
+      location: c.location,
+      priority,
+      estCost:  formatCurrency((85 + i * 12) * 100000, 'INR'),
+      estROI:   `${(18 + i * 3).toFixed(0)} months`,
     }
-    fetchLocations()
-  }, [])
+  })
   
   const getScoreColor = (score) => {
     if (score >= 80) return 'text-status-success'

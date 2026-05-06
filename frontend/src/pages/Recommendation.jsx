@@ -1,30 +1,25 @@
-import React, { useState, useEffect } from 'react'
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts'
+import React from 'react'
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, ReferenceLine } from 'recharts'
 import { getScheduleRecommendation } from '../services/api'
 import ChartCard from '../components/ChartCard'
 import MetricCard from '../components/MetricCard'
+import { useDemoData } from '../mock/useDemoData'
+import { generateSchedule, GRID_CAPACITY_KW } from '../mock/dataGenerator'
 
 function Recommendation() {
-  const [schedule, setSchedule] = useState(null)
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState(null)
-
-  const loadSchedule = async () => {
-    setLoading(true)
-    setError(null)
-    try {
-      const res = await getScheduleRecommendation()
-      setSchedule(res.data)
-    } catch (error) {
-      console.error('Error loading schedule:', error)
-      setError('Failed to load schedule. Please ensure the backend is running.')
+  const { data: schedule, loading, source } = useDemoData(
+    () => getScheduleRecommendation(),
+    (tick) => generateSchedule(tick),
+    {
+      transform: (data) => {
+        // Validate API response — if total_load_kw is all zeros, reject so mock kicks in
+        if (!data?.schedule?.length) return null
+        const hasValidAfter = data.schedule.some(s => (s.total_load_kw ?? 0) > 0)
+        if (!hasValidAfter) return null
+        return data
+      }
     }
-    setLoading(false)
-  }
-
-  useEffect(() => {
-    loadSchedule()
-  }, [])
+  )
 
   if (loading) {
     return (
@@ -37,26 +32,20 @@ function Recommendation() {
     )
   }
 
-  if (error) {
-    return (
-      <div className="flex items-center justify-center h-screen p-4">
-        <div className="text-center max-w-md">
-          <div className="w-16 h-16 bg-status-danger/10 rounded-full flex items-center justify-center mx-auto mb-4">
-            <span className="text-2xl">⚠️</span>
-          </div>
-          <p className="text-base sm:text-lg text-text-primary mb-2 font-semibold">Connection Error</p>
-          <p className="text-sm text-text-secondary">{error}</p>
-        </div>
-      </div>
-    )
-  }
-
   const chartData = schedule?.schedule?.map((step) => {
-    const d = new Date(step.timestamp);
+    // Use pre-computed label if available, else derive 24h format
+    const label = step.label ?? (() => {
+      const d = new Date(step.timestamp)
+      // Handle legacy "HH:00" string timestamps from old generateSchedule
+      if (typeof step.timestamp === 'string' && /^\d{2}:\d{2}$/.test(step.timestamp)) {
+        return step.timestamp
+      }
+      return `${String(d.getHours()).padStart(2, '0')}:00`
+    })()
     return {
-      hour: d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      hour: label,
       before: parseFloat(step.uncontrolled_load_kw.toFixed(2)),
-      after: parseFloat(step.total_load_kw.toFixed(2))
+      after: parseFloat(step.total_load_kw.toFixed(2)),
     }
   }) || []
 
@@ -79,14 +68,14 @@ function Recommendation() {
           subtitle="Through smart EV scheduling"
           icon="📉"
         />
-        
+
         <MetricCard
           title="Strategy"
           value="Smart Charging"
           subtitle="Shift EV loads to off-peak"
           icon="🔋"
         />
-        
+
         <MetricCard
           dark
           title="Time Window"
@@ -98,18 +87,18 @@ function Recommendation() {
 
       {/* Comparison Chart */}
       <div className="mb-4 sm:mb-6">
-        <ChartCard 
-          title="EV Charging Load Comparison" 
+        <ChartCard
+          title="EV Charging Load Comparison"
           subtitle="Before and after smart scheduling"
         >
           <ResponsiveContainer width="100%" height={280} className="sm:h-[340px] lg:h-[380px]">
-            <LineChart 
+            <LineChart
               data={chartData}
               margin={{ top: 5, right: 10, left: -10, bottom: 5 }}
             >
               <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
-              <XAxis 
-                dataKey="hour" 
+              <XAxis
+                dataKey="hour"
                 tick={{ fill: '#A0A6B1', fontSize: 10 }}
                 axisLine={{ stroke: '#2F343A' }}
                 interval="preserveStartEnd"
@@ -117,21 +106,21 @@ function Recommendation() {
                 textAnchor="end"
                 height={60}
               />
-              <YAxis 
+              <YAxis
                 tick={{ fill: '#A0A6B1', fontSize: 10 }}
                 axisLine={{ stroke: '#2F343A' }}
                 width={40}
-                label={{ 
-                  value: 'EV Load (kW)', 
-                  angle: -90, 
+                label={{
+                  value: 'EV Load (kW)',
+                  angle: -90,
                   position: 'insideLeft',
                   style: { fill: '#A0A6B1', fontSize: 10 },
                   className: "hidden sm:block"
                 }}
               />
-              <Tooltip 
-                contentStyle={{ 
-                  backgroundColor: '#1A1D21', 
+              <Tooltip
+                contentStyle={{
+                  backgroundColor: '#1A1D21',
                   border: '1px solid #2F343A',
                   borderRadius: '8px',
                   padding: '8px 12px',
@@ -140,30 +129,30 @@ function Recommendation() {
                 }}
                 cursor={{ stroke: '#5B7CFA', strokeWidth: 1 }}
               />
-              <Legend 
+              <Legend
                 verticalAlign="top"
                 height={36}
-                wrapperStyle={{ 
+                wrapperStyle={{
                   paddingBottom: '10px',
                   fontSize: '11px'
                 }}
                 className="sm:text-xs"
                 iconType="line"
               />
-              <Line 
-                type="monotone" 
-                dataKey="before" 
-                stroke="#8A94A6" 
+              <Line
+                type="monotone"
+                dataKey="before"
+                stroke="#8A94A6"
                 strokeWidth={1.5}
                 className="sm:stroke-2"
                 strokeDasharray="5 5"
                 name="Before Smart Charging"
                 dot={false}
               />
-              <Line 
-                type="monotone" 
-                dataKey="after" 
-                stroke="#5B7CFA" 
+              <Line
+                type="monotone"
+                dataKey="after"
+                stroke="#5B7CFA"
                 strokeWidth={2}
                 className="sm:stroke-[3]"
                 name="After Smart Charging"

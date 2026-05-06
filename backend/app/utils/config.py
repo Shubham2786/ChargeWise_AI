@@ -29,5 +29,20 @@ class Config:
     SHAP_TOP_FEATURES = int(os.getenv("SHAP_TOP_FEATURES", 3))
     
     DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./grid_optimizer.db")
+    # SQLAlchemy 2.x requires postgresql:// not postgres://
+    if DATABASE_URL.startswith("postgres://"):
+        DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
+    
+    # AI Demo Generation
+    GROQ_API_KEY = os.getenv("GROQ_API_KEY", "")
+    USE_AI_DEMO_DATA = os.getenv("USE_AI_DEMO_DATA", "false").lower() == "true"
+    SCENARIO_MODE = os.getenv("SCENARIO_MODE", "NORMAL")
+    FREEZE_DEMO_STATE = os.getenv("FREEZE_DEMO_STATE", "false").lower() == "true"
+    
+    # Demo Mode Health Guardrails
+    MAX_GRID_LOAD = 220
+    MAX_PRICE = 18
+    MAX_PEAK_REDUCTION = 65
+    MAX_RISK_SCORE = 100
 
 config = Config()

@@ -19,7 +19,7 @@ const MENU_WIDTH = 260
 const pageVariants = {
   initial: { opacity: 0, y: 10 },
   animate: { opacity: 1, y: 0 },
-  exit:    { opacity: 0, y: -6 },
+  exit: { opacity: 0, y: -6 },
 }
 
 function AnimatedRoutes() {
@@ -35,15 +35,15 @@ function AnimatedRoutes() {
         transition={{ duration: 0.22, ease: 'easeInOut' }}
       >
         <Routes location={location}>
-          <Route path="/"          element={<Dashboard />} />
-          <Route path="/forecast"  element={<Forecasting />} />
-          <Route path="/schedule"  element={<Recommendation />} />
-          <Route path="/risk"      element={<RiskMonitoring />} />
-          <Route path="/pricing"   element={<PricingIntelligence />} />
-          <Route path="/planning"  element={<Planning />} />
+          <Route path="/" element={<Dashboard />} />
+          <Route path="/forecast" element={<Forecasting />} />
+          <Route path="/schedule" element={<Recommendation />} />
+          <Route path="/risk" element={<RiskMonitoring />} />
+          <Route path="/pricing" element={<PricingIntelligence />} />
+          <Route path="/planning" element={<Planning />} />
           <Route path="/anomalies" element={<AnomalyDetection />} />
           <Route path="/hierarchy" element={<HierarchicalForecast />} />
-          <Route path="/system"    element={<SystemOverview />} />
+          <Route path="/system" element={<SystemOverview />} />
         </Routes>
       </motion.div>
     </AnimatePresence>
@@ -51,11 +51,15 @@ function AnimatedRoutes() {
 }
 
 function AppContent() {
-  const [isOpen, setIsOpen]     = useState(false)
+  const [isOpen, setIsOpen] = useState(false)
   const [isMobile, setIsMobile] = useState(() => window.innerWidth < 768)
+  const [isDesktop, setIsDesktop] = useState(() => window.innerWidth >= 1024)
 
   useEffect(() => {
-    const onResize = () => setIsMobile(window.innerWidth < 768)
+    const onResize = () => {
+      setIsMobile(window.innerWidth < 768)
+      setIsDesktop(window.innerWidth >= 1024)
+    }
     window.addEventListener('resize', onResize)
     return () => window.removeEventListener('resize', onResize)
   }, [])
@@ -64,30 +68,30 @@ function AppContent() {
   useEffect(() => { setIsOpen(false) }, [isMobile])
 
   const toggle = useCallback(() => setIsOpen(o => !o), [])
-  const close  = useCallback(() => setIsOpen(false), [])
+  const close = useCallback(() => setIsOpen(false), [])
 
   const EASE = 'cubic-bezier(0.25,0.8,0.25,1)'
-  const DUR  = '0.36s'
+  const DUR = '0.36s'
 
-  // ── DESKTOP: translateX ONLY — no scale, no width change ────────────────
-  // The panel moves right; its intrinsic width (100vw) never changes.
+  // ── DESKTOP (≥1024px): cinematic translateX slide ───────────────────────
+  // overflowX:hidden only when open — prevents bleed without creating a scroll container at rest
   const desktopPanelStyle = {
-    transform:  isOpen ? `translateX(${MENU_WIDTH}px)` : 'translateX(0px)',
+    transform: isOpen ? `translateX(${MENU_WIDTH}px)` : 'translateX(0px)',
     transition: `transform ${DUR} ${EASE}`,
-    // NO scale, NO overflow:hidden, NO width change
+    ...(isOpen ? { overflowX: 'hidden' } : {}),
   }
 
-  // ── MOBILE: dashboard never moves — menu slides over ────────────────────
+  // ── MOBILE/TABLET (<1024px): dashboard stays put, menu slides over ───────
   const mobilePanelStyle = {
-    transform:  'none',
+    transform: 'none',
     transition: 'none',
   }
 
-  const panelStyle = isMobile ? mobilePanelStyle : desktopPanelStyle
+  const panelStyle = isDesktop ? desktopPanelStyle : mobilePanelStyle
 
   // ── MOBILE: menu slides in from the left, over dashboard ────────────────
   const mobileMenuWrapStyle = {
-    transform:  isOpen ? 'translateX(0)' : `translateX(-${MENU_WIDTH}px)`,
+    transform: isOpen ? 'translateX(0)' : `translateX(-${MENU_WIDTH}px)`,
     transition: `transform ${DUR} ${EASE}`,
   }
 
@@ -97,7 +101,17 @@ function AppContent() {
      * overflow-x: hidden clips the menu that lives to the left of the viewport
      * on mobile (translateX(-260px) state).
      */
-    <div className="min-h-screen" style={{ background: '#080a0f', overflowX: 'hidden' }}>
+    <div
+      className="min-h-screen"
+      style={{
+        background: '#080a0f',
+        width: '100%',
+        position: 'relative',
+        // clip-path on the root prevents the translated panel from painting
+        // outside the viewport without creating a scroll container
+        isolation: 'isolate',
+      }}
+    >
 
       {/* ── Ambient glow (decorative only) ── */}
       <div
@@ -121,8 +135,8 @@ function AppContent() {
         className="fixed left-0 top-0 h-full"
         style={{
           width: MENU_WIDTH,
-          zIndex: isMobile ? 300 : 50,
-          ...(isMobile ? mobileMenuWrapStyle : {}),
+          zIndex: isDesktop ? 50 : 300,
+          ...(!isDesktop ? mobileMenuWrapStyle : {}),
         }}
       >
         <SlidingMenu isOpen={isOpen} onClose={close} />
@@ -181,16 +195,16 @@ function AppContent() {
          * clicking anywhere on the shifted panel closes the menu.
          * Does NOT use backdrop-filter or opacity blur — those block content.
          */}
-        {!isMobile && (
+        {isDesktop && (
           <div
             aria-hidden="true"
             onClick={close}
             style={{
-              position:      'absolute',
-              inset:         0,
-              zIndex:        140,
+              position: 'absolute',
+              inset: 0,
+              zIndex: 140,
               pointerEvents: isOpen ? 'auto' : 'none',
-              cursor:        isOpen ? 'pointer' : 'default',
+              cursor: isOpen ? 'pointer' : 'default',
             }}
           />
         )}
@@ -202,16 +216,16 @@ function AppContent() {
        * Sits between menu (z300) and dashboard (z100) visually,
        * but click-closes the menu.
        */}
-      {isMobile && isOpen && (
+      {!isDesktop && isOpen && (
         <div
           aria-hidden="true"
           onClick={close}
           style={{
-            position:   'fixed',
-            inset:      0,
-            zIndex:     290,
+            position: 'fixed',
+            inset: 0,
+            zIndex: 290,
             background: 'rgba(0,0,0,0.5)',
-            cursor:     'pointer',
+            cursor: 'pointer',
           }}
         />
       )}

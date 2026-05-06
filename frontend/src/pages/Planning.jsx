@@ -1,36 +1,40 @@
-import React from 'react'
-
-const locations = [
-  { 
-    name: 'Downtown EV Charging Hub', 
-    score: 85, 
-    status: 'Excellent', 
-    capacity: '95%',
-    lastMaintenance: '2 weeks ago',
-    nextInspection: 'In 3 months',
-    priority: 'low'
-  },
-  { 
-    name: 'Suburban Charging Station', 
-    score: 62, 
-    status: 'Fair', 
-    capacity: '78%',
-    lastMaintenance: '6 months ago',
-    nextInspection: 'In 1 month',
-    priority: 'medium'
-  },
-  { 
-    name: 'Industrial Zone Fast Chargers', 
-    score: 48, 
-    status: 'Needs Attention', 
-    capacity: '92%',
-    lastMaintenance: '1 year ago',
-    nextInspection: 'Overdue',
-    priority: 'high'
-  }
-]
+import React, { useState, useEffect } from 'react'
+import { getPlanningCandidates } from '../services/api'
 
 function Planning() {
+  const [locations, setLocations] = useState([])
+  const [loading, setLoading] = useState(true)
+  
+  useEffect(() => {
+    const fetchLocations = async () => {
+      try {
+        const res = await getPlanningCandidates()
+        // Map the backend candidates to the UI schema
+        const mapped = res.data.candidates.map((c, i) => {
+          // Determine priority based on score
+          let priority = 'low'
+          if (c.score >= 0.7) priority = 'high'
+          else if (c.score >= 0.4) priority = 'medium'
+          
+          return {
+            name: `Candidate Zone ${i+1}`,
+            score: Math.round(c.score * 100),
+            status: c.reason,
+            capacity: 'N/A', // New zone, so no current usage
+            location: c.location,
+            priority: priority
+          }
+        })
+        setLocations(mapped)
+      } catch (err) {
+        console.error("Failed to fetch candidates", err)
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchLocations()
+  }, [])
+  
   const getScoreColor = (score) => {
     if (score >= 80) return 'text-status-success'
     if (score >= 60) return 'text-status-warning'
@@ -100,20 +104,12 @@ function Planning() {
             </div>
 
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 pt-4 border-t border-border-subtle">
-              <div>
-                <p className="text-xs text-text-muted mb-1">Capacity Usage</p>
-                <p className="text-sm font-semibold text-text-primary">{loc.capacity}</p>
+              <div className="col-span-2">
+                <p className="text-xs text-text-muted mb-1">GPS Coordinates</p>
+                <p className="text-sm font-semibold text-text-primary break-words">{loc.location}</p>
               </div>
-              <div>
-                <p className="text-xs text-text-muted mb-1">Last Maintenance</p>
-                <p className="text-sm font-semibold text-text-primary break-words">{loc.lastMaintenance}</p>
-              </div>
-              <div>
-                <p className="text-xs text-text-muted mb-1">Next Inspection</p>
-                <p className="text-sm font-semibold text-text-primary break-words">{loc.nextInspection}</p>
-              </div>
-              <div>
-                <p className="text-xs text-text-muted mb-1">Health Score</p>
+              <div className="col-span-2">
+                <p className="text-xs text-text-muted mb-1">Suitability Score</p>
                 <div className="w-full bg-bg-elevated rounded-full h-2 mt-1.5">
                   <div 
                     className="bg-gradient-primary h-2 rounded-full transition-all"
@@ -124,50 +120,28 @@ function Planning() {
             </div>
           </div>
         ))}
+        {loading && <p className="text-text-secondary text-sm">Analyzing optimal zones...</p>}
+        {!loading && locations.length === 0 && <p className="text-text-secondary text-sm">No viable candidates found.</p>}
       </div>
 
       {/* Recommendations */}
       <div className="glass-dark rounded-card p-4 sm:p-6 shadow-glass">
-        <h3 className="text-base sm:text-lg font-semibold text-text-primary mb-4">Priority Actions</h3>
+        <h3 className="text-base sm:text-lg font-semibold text-text-primary mb-4">Strategic Priorities</h3>
         <div className="space-y-3">
-          <div className="flex flex-col sm:flex-row sm:items-start gap-3 p-3 sm:p-4 rounded-button bg-bg-elevated">
-            <div className="w-7 h-7 rounded-full bg-gradient-primary text-white flex items-center justify-center text-xs font-bold flex-shrink-0">
-              1
+          {locations.slice(0, 3).map((loc, idx) => (
+            <div key={idx} className="flex flex-col sm:flex-row sm:items-start gap-3 p-3 sm:p-4 rounded-button bg-bg-elevated">
+              <div className="w-7 h-7 rounded-full bg-gradient-primary text-white flex items-center justify-center text-xs font-bold flex-shrink-0">
+                {idx + 1}
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-semibold text-text-primary mb-1 break-words">{loc.name} - Investment Recommended</p>
+                <p className="text-xs text-text-muted break-words">Primary reason: {loc.status}. Deploy charging infrastructure at {loc.location}.</p>
+              </div>
+              <button className="px-4 py-2.5 bg-gradient-primary text-white rounded-pill text-xs font-medium hover-lift shadow-glass whitespace-nowrap self-start sm:self-auto min-h-touch">
+                Deploy
+              </button>
             </div>
-            <div className="flex-1 min-w-0">
-              <p className="text-sm font-semibold text-text-primary mb-1 break-words">Industrial Zone Fast Chargers - Urgent Assessment</p>
-              <p className="text-xs text-text-muted break-words">Schedule immediate inspection. Charger health below threshold. Maintenance overdue by 3 months.</p>
-            </div>
-            <button className="px-4 py-2.5 bg-gradient-primary text-white rounded-pill text-xs font-medium hover-lift shadow-glass whitespace-nowrap self-start sm:self-auto min-h-touch">
-              Schedule
-            </button>
-          </div>
-          
-          <div className="flex flex-col sm:flex-row sm:items-start gap-3 p-3 sm:p-4 rounded-button hover:bg-bg-elevated transition-colors">
-            <div className="w-7 h-7 rounded-full bg-bg-subtle text-text-primary flex items-center justify-center text-xs font-bold flex-shrink-0">
-              2
-            </div>
-            <div className="flex-1 min-w-0">
-              <p className="text-sm font-semibold text-text-primary mb-1 break-words">Suburban Charging Station - Routine Maintenance</p>
-              <p className="text-xs text-text-muted break-words">Plan maintenance within next 30 days. Consider adding more charging ports.</p>
-            </div>
-            <button className="px-4 py-2.5 bg-bg-elevated text-text-primary rounded-pill text-xs font-medium hover:bg-bg-subtle transition-colors whitespace-nowrap self-start sm:self-auto min-h-touch">
-              Plan
-            </button>
-          </div>
-          
-          <div className="flex flex-col sm:flex-row sm:items-start gap-3 p-3 sm:p-4 rounded-button hover:bg-bg-elevated transition-colors">
-            <div className="w-7 h-7 rounded-full bg-bg-subtle text-text-primary flex items-center justify-center text-xs font-bold flex-shrink-0">
-              3
-            </div>
-            <div className="flex-1 min-w-0">
-              <p className="text-sm font-semibold text-text-primary mb-1 break-words">Downtown EV Hub - Continue Monitoring</p>
-              <p className="text-xs text-text-muted break-words">Excellent health status. Maintain current inspection schedule.</p>
-            </div>
-            <button className="px-4 py-2.5 bg-bg-elevated text-text-primary rounded-pill text-xs font-medium hover:bg-bg-subtle transition-colors whitespace-nowrap self-start sm:self-auto min-h-touch">
-              View
-            </button>
-          </div>
+          ))}
         </div>
       </div>
     </div>

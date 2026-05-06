@@ -1,29 +1,118 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
-import { generateData, getForecast, getRisk, getExplain } from '../services/api'
+import { generateData, getForecast, getRisk, getLoad, getSessions } from '../services/api'
 import MetricCard from '../components/MetricCard'
 import ChartCard from '../components/ChartCard'
 
+// Pure aggregation functions
+const filterAndSort = (data, days) => {
+  if (!data || !data.length) return [];
+  // data is ordered newest first (descending). Get the newest timestamp.
+  const newestTime = new Date(data[0].timestamp).getTime();
+  const cutoff = newestTime - (days * 24 * 60 * 60 * 1000);
+  
+  // Filter for records within the cutoff window, then reverse so oldest is first (chronological)
+  return data.filter(item => new Date(item.timestamp).getTime() >= cutoff).reverse();
+};
+
+const aggregateDaily = (data, forecastData = []) => {
+  const recent = filterAndSort(data, 1); // Last 24 hours
+  const map = new Map();
+  recent.forEach(item => {
+    const d = new Date(item.timestamp);
+    d.setMinutes(0, 0, 0); // Group by hour
+    const label = d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    if (!map.has(label)) map.set(label, { sum: 0, count: 0, timestamp: item.timestamp });
+    const group = map.get(label);
+    group.sum += item.load_kw;
+    group.count += 1;
+  });
+  
+  const historical = Array.from(map.entries()).map(([label, group]) => ({
+    label,
+    load: parseFloat((group.sum / group.count).toFixed(2)),
+    predicted: null,
+    timestamp: group.timestamp
+  }));
+  
+  const predicted = forecastData.map(item => {
+    const d = new Date(item.timestamp);
+    return {
+      label: d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      load: null,
+      predicted: parseFloat(item.predicted_kwh.toFixed(2)),
+      timestamp: item.timestamp,
+      explanation: item.explanation
+    };
+  });
+  
+  return [...historical, ...predicted];
+};
+
+const aggregateWeekly = (data) => {
+  const recent = filterAndSort(data, 7); // Last 7 days
+  if (!recent.length) return [];
+  const map = new Map();
+  recent.forEach(item => {
+    const d = new Date(item.timestamp);
+    const label = d.toLocaleDateString([], { weekday: 'short' });
+    if (!map.has(label)) map.set(label, { sum: 0, count: 0, timestamp: item.timestamp });
+    const group = map.get(label);
+    group.sum += item.load_kw;
+    group.count += 1;
+  });
+  return Array.from(map.entries()).map(([label, group]) => ({
+    label,
+    load: parseFloat((group.sum / group.count).toFixed(2)),
+    timestamp: group.timestamp
+  }));
+};
+
+const aggregateMonthly = (data) => {
+  const recent = filterAndSort(data, 30); // Last 30 days
+  if (!recent.length) return [];
+  const map = new Map();
+  recent.forEach(item => {
+    const d = new Date(item.timestamp);
+    const label = `${d.getMonth()+1}/${d.getDate()}`;
+    if (!map.has(label)) map.set(label, { sum: 0, count: 0, timestamp: item.timestamp });
+    const group = map.get(label);
+    group.sum += item.load_kw;
+    group.count += 1;
+  });
+  return Array.from(map.entries()).map(([label, group]) => ({
+    label,
+    load: parseFloat((group.sum / group.count).toFixed(2)),
+    timestamp: group.timestamp
+  }));
+};
+
 function Dashboard() {
-  const [forecast, setForecast] = useState(null)
+  const [forecast, setForecast] = useState([])
   const [risk, setRisk] = useState(null)
-  const [explain, setExplain] = useState(null)
+  const [actualLoad, setActualLoad] = useState([])
+  const [sessions, setSessions] = useState([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
-  const [timeFilter, setTimeFilter] = useState('All')
+  const [range, setRange] = useState('daily')
 
   const loadData = async () => {
     setLoading(true)
     setError(null)
     try {
       await generateData()
-      const forecastRes = await getForecast()
-      const riskRes = await getRisk()
-      const explainRes = await getExplain()
+      const [forecastRes, riskRes, loadRes, sessionsRes] = await Promise.all([
+        getForecast(24),
+        getRisk(),
+        getLoad(2880), // Fetch a full month (30 days * 96 intervals)
+        getSessions()
+      ])
       
-      setForecast(forecastRes.data)
+      setForecast(forecastRes.data.forecast || [])
       setRisk(riskRes.data)
-      setExplain(explainRes.data)
+      
+      setActualLoad(loadRes.data)
+      setSessions(sessionsRes.data)
     } catch (error) {
       console.error('Error loading data:', error)
       setError('Failed to load data. Please ensure the backend is running.')
@@ -34,6 +123,23 @@ function Dashboard() {
   useEffect(() => {
     loadData()
   }, [])
+
+  // Compute datasets dynamically based on raw data
+  const datasets = useMemo(() => {
+    if (!actualLoad.length) return { daily: [], weekly: [], monthly: [] };
+    return {
+      daily: aggregateDaily(actualLoad, forecast),
+      weekly: aggregateWeekly(actualLoad),
+      monthly: aggregateMonthly(actualLoad)
+    };
+  }, [actualLoad, forecast]);
+
+  const selectedData = datasets[range] || [];
+
+  const maxRealLoad = selectedData.length > 0 ? Math.max(...selectedData.map(item => item.load)) : null
+  const peakItem = selectedData.length > 0 ? selectedData.find(item => item.load === maxRealLoad) : null
+  const peakTimeText = peakItem ? peakItem.label : '-'
+  const avgRealLoad = selectedData.length > 0 ? (selectedData.reduce((sum, item) => sum + item.load, 0) / selectedData.length) : null
 
   if (loading) {
     return (
@@ -66,10 +172,6 @@ function Dashboard() {
     )
   }
 
-  const chartData = forecast?.predictions.map((val, idx) => ({
-    hour: `${idx}:00`,
-    load: val
-  })) || []
 
   const getRiskColor = (level) => {
     switch(level) {
@@ -99,24 +201,24 @@ function Dashboard() {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-4 sm:mb-6">
         <MetricCard
           dark
-          title="Peak Charging Hour"
-          value={`${forecast?.peak_hour ?? '-'}:00`}
-          subtitle="Expected peak demand"
+          title="Peak Charging Time"
+          value={peakTimeText}
+          subtitle="Recent peak demand"
           icon="🔌"
         />
         
         <MetricCard
           title="Max EV Load"
-          value={`${risk?.max_load ?? '-'}`}
-          subtitle="kW predicted demand"
+          value={maxRealLoad !== null ? maxRealLoad.toFixed(1) : '-'}
+          subtitle="kW recent peak"
           icon="⚡"
           trend={5.2}
         />
         
         <MetricCard
-          title="Grid Capacity"
-          value={`${risk?.capacity_percent ?? '-'}%`}
-          subtitle="Current utilization"
+          title="Active Sessions"
+          value={sessions.length.toString()}
+          subtitle="Recent EV charging sessions"
           icon="🔋"
           trend={-2.1}
         />
@@ -135,21 +237,21 @@ function Dashboard() {
         {/* Main Forecast Chart */}
         <div className="lg:col-span-2">
           <ChartCard 
-            title="24-Hour EV Charging Forecast" 
+            title={`${range.charAt(0).toUpperCase() + range.slice(1)} EV Charging Forecast`} 
             subtitle="Predicted charging demand pattern"
             actions={
               <div className="flex gap-2">
-                {['All', 'Weekly', 'Monthly'].map((filter) => (
+                {['daily', 'weekly', 'monthly'].map((filter) => (
                   <button
                     key={filter}
-                    onClick={() => setTimeFilter(filter)}
+                    onClick={() => setRange(filter)}
                     className={`px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-pill text-xs font-medium transition-all min-h-touch ${
-                      timeFilter === filter
+                      range === filter
                         ? 'bg-gradient-primary text-white shadow-glass'
                         : 'bg-bg-elevated text-text-secondary hover:bg-bg-subtle hover:text-text-primary'
                     }`}
                   >
-                    {filter}
+                    {filter.charAt(0).toUpperCase() + filter.slice(1)}
                   </button>
                 ))}
               </div>
@@ -157,12 +259,13 @@ function Dashboard() {
           >
             <ResponsiveContainer width="100%" height={240} className="sm:h-[280px] lg:h-[320px]">
               <LineChart 
-                data={chartData}
+                key={range}
+                data={selectedData}
                 margin={{ top: 5, right: 10, left: -10, bottom: 5 }}
               >
                 <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
                 <XAxis 
-                  dataKey="hour" 
+                  dataKey="label" 
                   tick={{ fill: '#A0A6B1', fontSize: 10 }}
                   axisLine={{ stroke: '#2F343A' }}
                   interval="preserveStartEnd"
@@ -196,11 +299,23 @@ function Dashboard() {
                 <Line 
                   type="monotone" 
                   dataKey="load" 
+                  name="Historical Load"
                   stroke="#5B7CFA" 
                   strokeWidth={2}
                   className="sm:stroke-[3]"
                   dot={false}
                   activeDot={{ r: 4, fill: '#5B7CFA', stroke: '#E6E8EB', strokeWidth: 2 }}
+                />
+                <Line 
+                  type="monotone" 
+                  dataKey="predicted" 
+                  name="AI Forecast"
+                  stroke="#FFB020" 
+                  strokeWidth={2}
+                  strokeDasharray="5 5"
+                  className="sm:stroke-[3]"
+                  dot={false}
+                  activeDot={{ r: 4, fill: '#FFB020', stroke: '#E6E8EB', strokeWidth: 2 }}
                 />
               </LineChart>
             </ResponsiveContainer>
@@ -231,12 +346,12 @@ function Dashboard() {
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
                     <span className="text-xs text-text-primary">Peak Demand</span>
-                    <span className="text-xs font-bold text-text-primary">{risk?.max_load ?? '-'} kW</span>
+                    <span className="text-xs font-bold text-text-primary">{maxRealLoad !== null ? maxRealLoad.toFixed(1) : '-'} kW</span>
                   </div>
                   <div className="flex items-center justify-between">
                     <span className="text-xs text-text-primary">Avg Demand</span>
                     <span className="text-xs font-bold text-text-primary">
-                      {forecast?.predictions ? Math.round(forecast.predictions.reduce((a,b) => a+b, 0) / forecast.predictions.length) : '-'} kW
+                      {avgRealLoad !== null ? avgRealLoad.toFixed(1) : '-'} kW
                     </span>
                   </div>
                   <div className="flex items-center justify-between">
@@ -254,28 +369,25 @@ function Dashboard() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
         {/* AI Explainability */}
         <ChartCard title="AI Model Insights" subtitle="EV load prediction factors">
-          <div className="space-y-3">
-            {explain?.top_features?.slice(0, 5).map((feature, idx) => (
-              <div key={idx}>
-                <div className="flex items-center justify-between mb-1">
-                  <span className="text-xs text-text-secondary capitalize truncate">{feature.feature.replace('_', ' ')}</span>
-                  <span className="text-xs font-bold text-text-primary ml-2 flex-shrink-0">{(feature.importance * 100).toFixed(1)}%</span>
+          <div className="space-y-4">
+            {forecast?.slice(0, 4).map((item, idx) => {
+              const timeStr = new Date(item.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+              return (
+                <div key={idx} className="pb-3 border-b border-border-subtle last:border-0 last:pb-0">
+                  <div className="flex items-center justify-between mb-1">
+                    <span className="text-xs font-bold text-text-primary">{timeStr} Prediction</span>
+                    <span className="text-xs font-bold text-status-warning ml-2 flex-shrink-0">
+                      {item.predicted_kwh.toFixed(1)} kW
+                    </span>
+                  </div>
+                  <p className="text-xs text-text-secondary leading-relaxed">
+                    {item.explanation}
+                  </p>
                 </div>
-                <div className="w-full h-1.5 bg-bg-elevated rounded-full overflow-hidden">
-                  <div 
-                    className="h-full bg-gradient-primary rounded-full"
-                    style={{ width: `${feature.importance * 100}%` }}
-                  ></div>
-                </div>
-              </div>
-            )) || (
+              );
+            }) || (
               <p className="text-xs text-text-secondary">Loading feature analysis...</p>
             )}
-          </div>
-          <div className="mt-4 pt-4 border-t border-border-subtle">
-            <p className="text-xs text-text-secondary break-words">
-              {explain?.summary ?? 'AI model analyzing EV charging patterns...'}
-            </p>
           </div>
         </ChartCard>
 

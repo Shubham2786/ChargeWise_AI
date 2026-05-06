@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts'
-import { getSchedule } from '../services/api'
+import { getScheduleRecommendation } from '../services/api'
 import ChartCard from '../components/ChartCard'
 import MetricCard from '../components/MetricCard'
 
@@ -13,7 +13,7 @@ function Recommendation() {
     setLoading(true)
     setError(null)
     try {
-      const res = await getSchedule()
+      const res = await getScheduleRecommendation()
       setSchedule(res.data)
     } catch (error) {
       console.error('Error loading schedule:', error)
@@ -51,13 +51,16 @@ function Recommendation() {
     )
   }
 
-  const chartData = schedule?.before.map((val, idx) => ({
-    hour: `${idx}:00`,
-    before: val,
-    after: schedule.after[idx]
-  })) || []
+  const chartData = schedule?.schedule?.map((step) => {
+    const d = new Date(step.timestamp);
+    return {
+      hour: d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      before: parseFloat(step.uncontrolled_load_kw.toFixed(2)),
+      after: parseFloat(step.total_load_kw.toFixed(2))
+    }
+  }) || []
 
-  const improvement = schedule?.improvement_percent ?? 0
+  const improvement = schedule?.peak_reduction_percent ?? 0
 
   return (
     <div className="p-4 sm:p-6 lg:p-8 max-w-[1920px] mx-auto">
